@@ -7,6 +7,8 @@
 	request.setCharacterEncoding("UTF-8");
 	response.setCharacterEncoding("UTF-8");
 	
+	String kind=request.getParameter("kind");
+	String search=request.getParameter("search");	
 	int curPage=1;
 	
 	try{
@@ -15,14 +17,21 @@
 		e.printStackTrace();
 	}
 	
+	if(kind==null) {
+		kind="id";
+	}
+	if(search==null) {
+		search="";
+	}
+	
 	int perPage=10;	
 	int startRow=(curPage-1)*perPage+1;
 	int lastRow=curPage*perPage;	
 	
 	MemberDAO memberDAO = new MemberDAO();
-	ArrayList<MemberDTO> list = memberDAO.selectList(startRow,lastRow);
+	ArrayList<MemberDTO> list = memberDAO.selectList(startRow,lastRow,kind,search);
 	
-	int totalCount=memberDAO.getTotalCount();
+	int totalCount=memberDAO.getTotalCount(kind,search);
 	
 	int totalPage=0;
 	
@@ -113,16 +122,25 @@
 			<div class="container">               
  				<ul class="pagination"> 					
  					<%if(curBlock>1) {%>
- 						<li><a href="./MemberList.jsp?curPage=<%=startNum-1%>">[prev]</a></li>
+ 						<li><a href="./MemberList.jsp?curPage=<%=startNum-1%>&kind=<%=kind%>&search=<%=search%>">[prev]</a></li>
  					<%} %>
     				<%for(int i=startNum; i<=lastNum; i++){ %>
-    					<li><a href="./MemberList.jsp?curPage=<%=i%>"><%=i %></a></li>
+    					<li><a href="./MemberList.jsp?curPage=<%=i%>&kind=<%=kind%>&search=<%=search%>"><%=i %></a></li>
     				<%} %>
     				<%if(curBlock<totalBlock) {%>
-    					<li><a href="./MemberList.jsp?curPage=<%=lastNum+1%>">[next]</a></li>
+    					<li><a href="./MemberList.jsp?curPage=<%=lastNum+1%>&kind=<%=kind%>&search=<%=search%>">[next]</a></li>
     				<%} %>
   				</ul>
 			</div>
+			<form action="./MemberList.jsp">
+				<select name="kind">
+					<option value="id">ID</option>
+					<option value="name">NAME</option>
+					<option value="email">E-MAIL</option>
+				</select>
+			<input type="text" name="search">
+			<input type="submit" value="SEARCH">
+			</form>
 		</article>
 	</section>
 	<%@ include file="../temp/footer.jsp" %>

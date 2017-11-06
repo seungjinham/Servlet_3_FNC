@@ -8,12 +8,38 @@ import java.util.ArrayList;
 import com.iu.util.DBConnector;
 
 public class MemberDAO {
+	
+	public static void main(String[] args) {		
+		MemberDAO memberDAO= new MemberDAO();
+		
+		for(int i=29; i<40; i++) {
+			MemberDTO memberDTO=new MemberDTO();
+			memberDTO.setId("s"+i+"_id");
+			memberDTO.setPw("s"+i+"_id");
+			memberDTO.setName("s"+i);
+			memberDTO.setEmail("s"+i+"_email@naver.com");
+			memberDTO.setPhone("02-12"+i+"-4567");
+			memberDTO.setAge(i-21);
+			memberDTO.setJob("S");
+			
+			try {
+				memberDAO.insert(memberDTO);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		System.out.println("Done!");
+	}
+	
 	//getCount
-	public int getTotalCount() throws Exception {
+	public int getTotalCount(String kind, String search) throws Exception {
 		Connection con = DBConnector.getConnect();
 		
-		String sql="select nvl(count(id),0) from member";
+		String sql="select nvl(count(id),0) from member where "+kind+" like ?";
 		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1, "%"+search+"%");
 		ResultSet rs = st.executeQuery();
 		rs.next();
 		
@@ -25,16 +51,17 @@ public class MemberDAO {
 	}
 
 	//selectList
-	public ArrayList<MemberDTO> selectList(int startRow, int lastRow) throws Exception{
+	public ArrayList<MemberDTO> selectList(int startRow, int lastRow, String kind, String search) throws Exception{
 		Connection con=DBConnector.getConnect();
 		
 		String sql="select * from "
 				+ "(select rownum R, ID.* from "
-				+ "(select * from member order by id asc) ID) "
+				+ "(select * from member where "+kind+" like ? order by id asc) ID) "
 				+ "where R between ? and ?";
 		PreparedStatement st = con.prepareStatement(sql);
-		st.setInt(1, startRow);
-		st.setInt(2, lastRow);
+		st.setString(1, "%"+search+"%");
+		st.setInt(2, startRow);
+		st.setInt(3, lastRow);
 		
 		ResultSet rs = st.executeQuery();
 		
