@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import com.iu.util.DBConnector;
 
 public class MemberDAO {
-	
+	//getCount
 	public int getTotalCount() throws Exception {
 		Connection con = DBConnector.getConnect();
 		
@@ -23,25 +23,8 @@ public class MemberDAO {
 		return totalCount;
 		
 	}
-	
-	public int insert(MemberDTO memberDTO) throws Exception{
-		Connection con = DBConnector.getConnect();
-		
-		String sql="insert into member values(?,?,?,?,?,?,?)";
-		PreparedStatement st = con.prepareStatement(sql);
-		st.setString(1, memberDTO.getId());
-		st.setString(2, memberDTO.getId());
-		st.setString(3, memberDTO.getName());
-		st.setString(4, memberDTO.getEmail());
-		st.setString(5, memberDTO.getPhone());
-		st.setInt(6, memberDTO.getAge());
-		st.setString(7, memberDTO.getJob());		
-		
-		int result=st.executeUpdate();
-		DBConnector.disConnect(st, con);
-		return result;
-	}
-	
+
+	//selectList
 	public ArrayList<MemberDTO> selectList(int startRow, int lastRow) throws Exception{
 		Connection con=DBConnector.getConnect();
 		
@@ -70,4 +53,24 @@ public class MemberDAO {
 		
 		return list;
 	}
+	
+	//insert
+	public int insert(MemberDTO memberDTO) throws Exception{
+		Connection con = DBConnector.getConnect();
+		
+		String sql="insert into member values(?,?,?,?,?,?,?)";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1, memberDTO.getId());
+		st.setString(2, memberDTO.getId());
+		st.setString(3, memberDTO.getName());
+		st.setString(4, memberDTO.getEmail());
+		st.setString(5, memberDTO.getPhone());
+		st.setInt(6, memberDTO.getAge());
+		st.setString(7, memberDTO.getJob());		
+		
+		int result=st.executeUpdate();
+		DBConnector.disConnect(st, con);
+		return result;
+	}
+
 }

@@ -81,28 +81,34 @@
 		margin: 0 auto;
 	}
 </style>
+<link href="../css/header.css" rel="stylesheet">
 </head>
 <body>	
+	<%@ include file="../temp/header.jsp" %>
 	<section id="main">
 		<h1>Member List</h1>
 		<article id="list">
 			<table class="table table-hover">
-				<tr>
-					<th>ID</th>
-					<th>NAME</th>
-					<th>EMAIL</th>
-					<th>PHONE</th>
-					<th>AGE</th>
-				</tr>					
-				<%for(MemberDTO memberDTO: list) {%>
+				<thead>
 					<tr>
-						<td><%=memberDTO.getId() %></td>
-						<td><%=memberDTO.getName() %></td>
-						<td><%=memberDTO.getEmail() %></td>
-						<td><%=memberDTO.getPhone() %></td>
-						<td><%=memberDTO.getAge() %></td>
-					</tr>
-				<%} %>
+						<th>ID</th>
+						<th>NAME</th>
+						<th>EMAIL</th>
+						<th>PHONE</th>
+						<th>AGE</th>
+					</tr>		
+				</thead>
+				<tbody>	
+					<%for(MemberDTO memberDTO: list) {%>
+						<tr>
+							<td><%=memberDTO.getId() %></td>
+							<td><%=memberDTO.getName() %></td>
+							<td><%=memberDTO.getEmail() %></td>
+							<td><%=memberDTO.getPhone() %></td>
+							<td><%=memberDTO.getAge() %></td>
+						</tr>
+					<%} %>
+				</tbody>	
 			</table>
 			<div class="container">               
  				<ul class="pagination"> 					
@@ -119,5 +125,6 @@
 			</div>
 		</article>
 	</section>
+	<%@ include file="../temp/footer.jsp" %>
 </body>
 </html>
