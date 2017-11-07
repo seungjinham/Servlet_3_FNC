@@ -49,8 +49,11 @@
 		var ageC=true;
 		
 		if(pw==null) {
+			pwC=false;
+		}else {
 			
 		}
+		
 		
 		
 	}
