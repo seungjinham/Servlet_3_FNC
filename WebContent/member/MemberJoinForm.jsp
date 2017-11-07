@@ -62,7 +62,7 @@
 <body>
 	<%@ include file= "../temp/header.jsp" %>
 	<section id="main">
-	<h1>Member Join Add GitHub</h1>
+	<h1>Member Join Add GitHub add GitHub2</h1>
 		<form name="frm" class="form-horizontal" action="MemberJoinProcess.jsp" method="post">
  			<div class="form-group">
  				<label class="control-label col-sm-2" for="id">ID:</label>
