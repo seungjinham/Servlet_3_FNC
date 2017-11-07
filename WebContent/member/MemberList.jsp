@@ -75,7 +75,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style type="text/css">
 	h1{
-		width: 30%;
+		width: 75%;
 		margin: 0 auto;
 		margin-top: 50px;
 		text-align: center;

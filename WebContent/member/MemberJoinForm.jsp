@@ -32,37 +32,40 @@
 		var btn=document.getElementById("btn");
 		btn.addEventListener("click",function(){
 			var id=document.frm.id.value;
-			window.open("MemberIdCheck.jsp?id="+id, "", "top=200, left=300, width=400, height=300");
-		});
+			window.open("MemberIdCheck.jsp?id="+id, "", "top=200, left=300, width=400, height=300");			
+		});		
 		
-		var pw=document.frm.pw.value;
-		var pw2=document.frm.pw2.value;
-		var name=document.frm.name.value;
-		var email=document.frm.email.value;
-		var phone=document.frm.phone.value;
-		var age=document.frm.phone.value;
-		var pwC=true;
-		var pw2C=true;
-		var nameC=true;
-		var emailC=true;
-		var phoneC=true;
-		var ageC=true;
+		var result=true;
+		var result2=true;
 		
-		if(pw==null) {
-			pwC=false;
-		}else {
+		var check = document.getElementById("check");
+			check.addEventListener("click", function(){
+			var member = document.getElementsByClassName("member");
 			
-		}
-		
-		
-		
+			for(var i=0;i<member.length;i++){
+				if(member[i].value==""){
+					result=false;
+				}
+			}
+			
+			if(member[0].value != member[1].value){
+				result2=false;
+			}
+			
+			if(result && result2){
+				document.frm.submit();
+			}else {
+				alert("모두 입력하세요");
+			}
+			
+		});
 	}
 </script>
 </head>
 <body>
 	<%@ include file= "../temp/header.jsp" %>
 	<section id="main">
-	<h1>Member Join Add GitHub add Local</h1>
+	<h1>Member Join</h1>
 		<form name="frm" class="form-horizontal" action="MemberJoinProcess.jsp" method="post">
  			<div class="form-group">
  				<label class="control-label col-sm-2" for="id">ID:</label>
@@ -72,39 +75,39 @@
  				</div>
  			</div>
  			<div class="form-group">
- 				<label class="control-label col-sm-2" for="pw">PW:</label>
+ 				<label class="control-label col-sm-2" for="pw1">PW:</label>
  				<div class="col-sm-10"> 
- 					<input type="password" class="form-control" id="pw" placeholder="Enter pw" name="pw">
+ 					<input type="password" class="form-control member" id="pw1" placeholder="Enter pw" name="pw1">
  				</div>
  			</div>
  			<div class="form-group">
-				<label class="control-label col-sm-2" for="pw">PW CHECK:</label>
+				<label class="control-label col-sm-2" for="pw2">PW CHECK:</label>
 				<div class="col-sm-10">
-					<input type="password" class="form-control" id="pw2" placeholder="Enter Pw">
+					<input type="password" class="form-control member" id="pw2" placeholder="Enter pwcheck" name="pw2">
 				</div>
 			</div>
  			<div class="form-group">
  				<label class="control-label col-sm-2" for="name">NAME:</label>
  				<div class="col-sm-10"> 
- 					<input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+ 					<input type="text" required="required" class="form-control member" id="name" placeholder="Enter name" name="name">
  				</div>
  			</div> 		
  			<div class="form-group">
  				<label class="control-label col-sm-2" for="email">E-MAIL:</label>
  				<div class="col-sm-10"> 
- 					<input type="text" class="form-control" id="email" placeholder="Enter email" name="email">
+ 					<input type="text" class="form-control member" id="email" placeholder="Enter e-mail" name="email">
  				</div>
  			</div>
  			<div class="form-group">
  				<label class="control-label col-sm-2" for="phone">PHONE:</label>
  				<div class="col-sm-10"> 
- 					<input type="text" class="form-control" id="phone" placeholder="Enter phone" name="phone">
+ 					<input type="text" class="form-control member" id="phone" placeholder="Enter phone" name="phone">
  				</div>
  			</div>
  			<div class="form-group">
  				<label class="control-label col-sm-2" for="age">AGE:</label>
  				<div class="col-sm-10"> 
- 					<input type="text" class="form-control" id="age" placeholder="Enter age" name="age">
+ 					<input type="text" class="form-control member" id="age" placeholder="Enter age" name="age">
  				</div>
  			</div>
  			<div class="form-group">
@@ -117,7 +120,7 @@
 
  			<div class="form-group"> 
  				<div class="col-sm-offset-2 col-sm-10">
- 					<button type="submit" class="btn btn-default" name="submit">Submit</button>
+ 					<input type="button" id="check" value="JOIN">
  				</div>
  			</div>
  		</form>

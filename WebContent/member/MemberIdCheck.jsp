@@ -9,9 +9,9 @@
 	MemberDAO memberDAO = new MemberDAO();
 	boolean check=memberDAO.idCheck(id);
 	
-	String s=id+"는 중복된 아이디입니다";
+	String s="중복된 아이디입니다";
 	if(check==true) {
-		s=id+"는 사용 가능한 아이디입니다";
+		s="사용 가능한 아이디입니다";
 	}
 %>	
 <!DOCTYPE html>

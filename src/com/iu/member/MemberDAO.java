@@ -17,7 +17,6 @@ public class MemberDAO {
 		st.setString(1, id);
 		ResultSet rs = st.executeQuery();
 		
-		
 		if(rs.next()) {
 				check=false;
 		}		
