@@ -8,29 +8,22 @@ import java.util.ArrayList;
 import com.iu.util.DBConnector;
 
 public class MemberDAO {
-	
-	public static void main(String[] args) {		
-		MemberDAO memberDAO= new MemberDAO();
+	//id Check
+	public boolean idCheck(String id) throws Exception {
+		Connection con = DBConnector.getConnect();
+		boolean check=true;
+		String sql="select * from member where id=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1, id);
+		ResultSet rs = st.executeQuery();
 		
-		for(int i=29; i<40; i++) {
-			MemberDTO memberDTO=new MemberDTO();
-			memberDTO.setId("s"+i+"_id");
-			memberDTO.setPw("s"+i+"_id");
-			memberDTO.setName("s"+i);
-			memberDTO.setEmail("s"+i+"_email@naver.com");
-			memberDTO.setPhone("02-12"+i+"-4567");
-			memberDTO.setAge(i-21);
-			memberDTO.setJob("S");
-			
-			try {
-				memberDAO.insert(memberDTO);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 		
-		System.out.println("Done!");
+		if(rs.next()) {
+				check=false;
+		}		
+		
+		DBConnector.disConnect(rs, st, con);
+		return check;
 	}
 	
 	//getCount

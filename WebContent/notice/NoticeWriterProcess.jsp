@@ -18,32 +18,26 @@
 	if(result>0) {
 		s="Write Success";
 	}
+	request.setAttribute("message", s);
+	request.setAttribute("path","../index.jsp");
+	
+	//1. Foward
+	
+	RequestDispatcher view = request.getRequestDispatcher("../common/result.jsp");
+	view.forward(request, response);
+	
+	
+	//2. redirect
+	//response.sendRedirect("../common/result.jsp");
+	
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link href="../css/header.css" rel="stylesheet">
-<script type="text/javascript">
-	alert('<%=s%>');
-	location.href="./NoticeList.jsp";
-</script>
 </head>
 <body>
-	<%@ include file="../temp/header.jsp" %>
-	<section id="main">
-
-	</section>
-	<%@ include file="../temp/footer.jsp" %>
 
 </body>
 </html>

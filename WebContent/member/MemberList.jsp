@@ -133,6 +133,7 @@
   				</ul>
 			</div>
 			<form action="./MemberList.jsp">
+				<input type="hidden" name="curPage">
 				<select name="kind">
 					<option value="id">ID</option>
 					<option value="name">NAME</option>
@@ -141,6 +142,7 @@
 			<input type="text" name="search">
 			<input type="submit" value="SEARCH">
 			</form>
+			<a class="btn btn-success" href="./MemberJoinForm.jsp">join</a>
 		</article>
 	</section>
 	<%@ include file="../temp/footer.jsp" %>
