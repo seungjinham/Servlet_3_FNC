@@ -15,8 +15,8 @@
 			</nav>
 			<div class="hdSubMenu">
 				<ul>
-					<li><a href="#">LOGIN</a></li>
-					<li><a href="#">JOIN</a></li>
+					<li><a href="<%= request.getContextPath()%>/member/MemberLoginForm.jsp">LOGIN</a></li>
+					<li><a href="<%= request.getContextPath()%>/member/MemberJoinForm.jsp">JOIN</a></li>
 					<li><a href="#">KO</a></li>
 					<li><a href="#">EN</a></li>
 					<li><a href="#">JP</a></li>

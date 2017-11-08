@@ -11,6 +11,7 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 	alert('<%=s%>');
+	location.href="../index.jsp";
 </script>
 </head>
 <body>

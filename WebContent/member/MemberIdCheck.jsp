@@ -24,6 +24,7 @@
 		var btn=document.getElementById("btn");
 		btn.addEventListener("click",function(){
 			window.opener.document.frm.id.value='<%=id%>';
+			window.opener.document.frm.idCheck.value=1;
 			window.close();
 		});		
 	}

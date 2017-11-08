@@ -40,6 +40,7 @@
 		
 		var check = document.getElementById("check");
 			check.addEventListener("click", function(){
+			var idCheck=document.frm.idCheck.value;
 			var member = document.getElementsByClassName("member");
 			
 			for(var i=0;i<member.length;i++){
@@ -52,12 +53,17 @@
 				result2=false;
 			}
 			
-			if(result && result2){
+			if(result && result2 && idCheck=="1"){
 				document.frm.submit();
 			}else {
 				alert("모두 입력하세요");
 			}
 			
+		});
+			
+		var id=document.getElementById("id");
+		id.addEventListener("change",function(){
+			document.frm.idCheck.value="0";
 		});
 	}
 </script>
@@ -67,6 +73,7 @@
 	<section id="main">
 	<h1>Member Join</h1>
 		<form name="frm" class="form-horizontal" action="MemberJoinProcess.jsp" method="post">
+			<input type="hidden" name="idCheck" value="0">
  			<div class="form-group">
  				<label class="control-label col-sm-2" for="id">ID:</label>
  				<div class="col-sm-10">
@@ -113,8 +120,8 @@
  			<div class="form-group">
  				<label class="control-label col-sm-2" for="job">JOB:</label>
  				<div class="col-sm-10"> 
- 					<input type="radio" value="S" class="radio-inline" id="age" name="age" checked="checked">STUDENT
- 					<input type="radio" value="T" class="radio-inline" id="age" name="age">TEACHER
+ 					<input type="radio" value="S" class="radio-inline" id="age" name="job" checked="checked">STUDENT
+ 					<input type="radio" value="T" class="radio-inline" id="age" name="job">TEACHER
  				</div>
  			</div>
 
