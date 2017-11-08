@@ -18,7 +18,9 @@
 	String path="./MemberLoginForm.jsp";
 	
 	if(memberDTO != null) {
-		path="../index.jsp";	
+		request.setAttribute("member", memberDTO);
+		RequestDispatcher view= request.getRequestDispatcher("../index.jsp");
+		view.forward(request,response);
 	}
 	response.sendRedirect(path);
 %>
