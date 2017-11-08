@@ -8,6 +8,19 @@ import java.util.ArrayList;
 import com.iu.util.DBConnector;
 
 public class MemberDAO {
+	//delete
+	public int delete(String id) throws Exception {
+		Connection con = DBConnector.getConnect();
+		
+		String sql="delete member where id=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1, id);
+		
+		int result=st.executeUpdate();
+		DBConnector.disConnect(st, con);
+		
+		return result;
+	}
 	
 	//selectOne
 	public MemberDTO selectOne(MemberDTO memberDTO) throws Exception {

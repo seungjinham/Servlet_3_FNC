@@ -10,6 +10,17 @@
 	memberDTO.setId(request.getParameter("id"));
 	memberDTO.setPw(request.getParameter("pw"));
 	memberDTO.setJob(request.getParameter("job"));
+	String save=request.getParameter("save");
+	
+	if(save != null) {
+		Cookie c = new Cookie("id",memberDTO.getId());
+		c.setMaxAge(60*10); //10분
+		response.addCookie(c);
+	}else {
+		Cookie c= new Cookie("id","");
+		
+		response.addCookie(c);
+	}
 	
 	MemberDAO memberDAO = new MemberDAO();
 	memberDTO=memberDAO.selectOne(memberDTO);
@@ -18,9 +29,8 @@
 	String path="./MemberLoginForm.jsp";
 	
 	if(memberDTO != null) {
-		request.setAttribute("member", memberDTO);
-		RequestDispatcher view= request.getRequestDispatcher("../index.jsp");
-		view.forward(request,response);
+		session.setAttribute("member",memberDTO);
+		path="../index.jsp";
 	}
 	response.sendRedirect(path);
 %>

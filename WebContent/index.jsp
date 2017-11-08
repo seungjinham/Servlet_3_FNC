@@ -1,3 +1,4 @@
+<%@page import="java.nio.channels.SeekableByteChannel"%>
 <%@page import="com.iu.member.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -15,12 +16,6 @@
 	
 	<!-- main 시작 -->
 	<section id="main">
-		<% MemberDTO memberDTO=(MemberDTO)request.getAttribute("member"); %>
-		<% if(memberDTO != null){ %>
-			<h1>Login Success</h1>
-		<%} else {%>
-			<h1>Before Login</h1>
-		<%} %>
 		<div id="mcontents">
 			<article id="mImage">
 				<img src = "./images/main/main.jpg">

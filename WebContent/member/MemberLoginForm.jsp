@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	Cookie[] ar=request.getCookies();
+	String cId="";
+	
+	for(int i=0; i<ar.length; i++) {
+		if(ar[i].getName().equals("id")){
+			cId=ar[i].getValue();
+			break;
+		}
+	}
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,11 +50,18 @@
  			<div class="form-group">
  				<label class="control-label col-sm-2" for="id">ID:</label>
  				<div class="col-sm-10">
- 					<input type="text" class="form-control" id="id" placeholder="Enter id" name="id">
+ 					<input type="text" class="form-control" value="<%= cId %>" id="id" placeholder="Enter id" name="id">
  				</div>
  			</div>
  			<div class="form-group">
- 				<label class="control-label col-sm-2" for="pw1">PW:</label>
+ 				<label class="control-label col-sm-2" for="job">ID저장하기:</label>
+ 				<div class="col-sm-10"> 
+ 					<input type="checkbox" value="save" class="checkbox-inline" name="save">
+
+ 				</div>
+ 			</div>
+ 			<div class="form-group">
+ 				<label class="control-label col-sm-2" for="pw">PW:</label>
  				<div class="col-sm-10"> 
  					<input type="password" class="form-control member" id="pw" placeholder="Enter pw" name="pw">
  				</div>

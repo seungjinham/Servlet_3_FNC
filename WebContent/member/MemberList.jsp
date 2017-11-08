@@ -108,13 +108,13 @@
 					</tr>		
 				</thead>
 				<tbody>	
-					<%for(MemberDTO memberDTO: list) {%>
+					<%for(MemberDTO mDto: list) {%>
 						<tr>
-							<td><%=memberDTO.getId() %></td>
-							<td><%=memberDTO.getName() %></td>
-							<td><%=memberDTO.getEmail() %></td>
-							<td><%=memberDTO.getPhone() %></td>
-							<td><%=memberDTO.getAge() %></td>
+							<td><%=mDto.getId() %></td>
+							<td><%=mDto.getName() %></td>
+							<td><%=mDto.getEmail() %></td>
+							<td><%=mDto.getPhone() %></td>
+							<td><%=mDto.getAge() %></td>
 						</tr>
 					<%} %>
 				</tbody>	
