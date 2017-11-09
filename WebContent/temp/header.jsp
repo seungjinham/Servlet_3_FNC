@@ -9,7 +9,7 @@
 			<nav>
 				<ul>
 					<li><a href="<%=request.getContextPath()%>/notice/NoticeList.jsp">NOTICE</a></li>
-					<li><a href="#">ARTISTS</a></li>
+					<li><a href="<%=request.getContextPath()%>/qna/QnaList.jsp">QNA</a></li>
 					<li><a href="#">PR CENTER</a></li>
 					<li><a href="#">AUDITION</a></li>
 				</ul>
