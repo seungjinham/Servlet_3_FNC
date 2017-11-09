@@ -138,7 +138,9 @@
 			<input type="text" name="search">
 			<input type="submit" value="SEARCH">
 			</form>
-			<a class="btn btn-success" href="./NoticeWriterForm.jsp">write</a>
+			<%if(memberDTO != null && memberDTO.getJob().equals("T")) {%>
+				<a class="btn btn-success" href="./NoticeWriterForm.jsp">write</a>
+			<%} %>
 		</article>
 	</section>
 	

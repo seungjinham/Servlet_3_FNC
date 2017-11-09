@@ -8,6 +8,25 @@ import java.util.ArrayList;
 import com.iu.util.DBConnector;
 
 public class MemberDAO {
+	//update
+	public int update(MemberDTO memberDTO) throws Exception {
+		Connection con = DBConnector.getConnect();
+		
+		String sql="update member set pw=?, name=?, email=?, phone=?, age=? where id=?";
+		PreparedStatement st=con.prepareStatement(sql);
+		st.setString(1, memberDTO.getPw());
+		st.setString(2, memberDTO.getName());
+		st.setString(3, memberDTO.getEmail());
+		st.setString(4, memberDTO.getPhone());
+		st.setInt(5, memberDTO.getAge());
+		st.setString(6, memberDTO.getId());
+		
+		int result=st.executeUpdate();
+		DBConnector.disConnect(st, con);
+		
+		return result;
+	}
+	
 	//delete
 	public int delete(String id) throws Exception {
 		Connection con = DBConnector.getConnect();
@@ -38,6 +57,7 @@ public class MemberDAO {
 		if(rs.next()) {
 			mDto=new MemberDTO();
 			mDto.setId(rs.getString("id"));
+			mDto.setPw(rs.getString("pw"));
 			mDto.setName(rs.getString("name"));
 			mDto.setEmail(rs.getString("email"));
 			mDto.setPhone(rs.getString("phone"));

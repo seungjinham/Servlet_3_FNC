@@ -32,7 +32,7 @@
  			<div class="form-group">
  				<label class="control-label col-sm-2" for="writer">WRITER:</label>
  				<div class="col-sm-10">
- 					<input type="text" class="form-control" id="writer" placeholder="Enter writer" name="writer">
+ 					<input type="text" class="form-control" id="writer" value="<%=memberDTO.getId() %>" name="writer" readonly="readonly">
  				</div>
  			</div>
  			<div class="form-group">

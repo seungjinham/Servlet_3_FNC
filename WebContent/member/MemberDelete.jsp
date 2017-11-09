@@ -1,3 +1,4 @@
+<%@page import="com.iu.member.MemberDTO"%>
 <%@page import="com.iu.member.MemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -5,14 +6,15 @@
 	request.setCharacterEncoding("UTF-8");
 	response.setCharacterEncoding("UTF-8");
 	
-	String id=request.getParameter("id");
+	MemberDTO memberDTO=(MemberDTO)session.getAttribute("member");
 	
 	MemberDAO memberDAO=new MemberDAO();
-	int result=memberDAO.delete(id);
+	int result=memberDAO.delete(memberDTO.getId());
 	
 	String s="Delete Fail";
 	if(result>0) {
 		s="Delete Success";
+		session.invalidate();
 	}
 	
 	request.setAttribute("message", s);

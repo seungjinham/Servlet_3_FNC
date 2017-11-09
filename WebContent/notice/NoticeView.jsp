@@ -63,8 +63,15 @@
 				</tr>
 			</tbody>
 		</table>
-		<a class="btn btn-info" href="./NoticeDelete.jsp?num=<%=noticeDTO.getNum()%>">Delete</a>
-		<a class="btn btn-info" href="./NoticeUpdateForm.jsp?num=<%=noticeDTO.getNum()%>">Update</a>
+		<%
+		try{
+			if( memberDTO != null && noticeDTO.getWriter().equals(memberDTO.getId()) ){ %>
+				<a class="btn btn-info" href="./NoticeDelete.jsp?num=<%=noticeDTO.getNum()%>">Delete</a>
+				<a class="btn btn-info" href="./NoticeUpdateForm.jsp?num=<%=noticeDTO.getNum()%>">Update</a>
+		<%	}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} %>
 		<a class="btn btn-info" href="./NoticeList.jsp">List</a>
 	</article>
 	</section>

@@ -40,6 +40,7 @@
 						<th>EMAIL</th>
 						<th>PHONE</th>
 						<th>AGE</th>
+						<th>JOB</th>
 					</tr>		
 				</thead>
 				<tbody>	
@@ -49,6 +50,7 @@
 						<td><%=memberDTO.getEmail() %></td>
 						<td><%=memberDTO.getPhone() %></td>
 						<td><%=memberDTO.getAge() %></td>
+						<td><%=memberDTO.getJob() %></td>
 					</tr>
 				</tbody>	
 			</table>
