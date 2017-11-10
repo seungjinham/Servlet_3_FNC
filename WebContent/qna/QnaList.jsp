@@ -6,13 +6,55 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	response.setCharacterEncoding("UTF-8");
-	
-	String kind=request.getParameter("kind");
-	String search=request.getParameter("search");
+
 	int curPage=1;	
+	try{
+		curPage=Integer.parseInt(request.getParameter("curPage"));
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+	
+	int perPage=5;
+	int startRow=(curPage-1)*perPage+1;
+	int lastRow=curPage*perPage;
 	
 	QnaDAO qnaDAO = new QnaDAO();
-	ArrayList<QnaDTO> list = qnaDAO.selectList();
+	ArrayList<QnaDTO> list = qnaDAO.selectList(startRow, lastRow);
+	
+	int totalCount=qnaDAO.getTotalCount();
+	int totalPage=0;
+	
+	if(totalCount%perPage==0) {
+		totalPage=totalCount/perPage;
+	}else{
+		totalPage=totalCount/perPage+1;
+	}
+	
+	int perBlock=5;
+	int totalBlock=0;
+	
+	if(totalPage%perBlock==0){
+		totalBlock=totalPage/perBlock;
+	} else{
+		totalBlock=totalPage/perBlock+1;
+	}
+
+	//curPage를 이용해서 curBlock구하기
+	int curBlock=0;
+	
+	if(curPage%perBlock==0) {
+		curBlock=curPage/perBlock;
+	} else{
+		curBlock=curPage/perBlock+1;
+	}
+	
+	//curBlock, startNum, lastNum
+	int startNum=(curBlock-1)*perBlock+1;
+	int lastNum=curBlock*perBlock;
+	
+	if(curBlock==totalBlock) {
+		lastNum=totalPage;
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -58,7 +100,7 @@
 				<%for(QnaDTO qnaDTO:list){ %>
 					<tr>
 						<td><%=qnaDTO.getNum() %></td>
-						<td><%=qnaDTO.getTitle() %></td>
+						<td><a href="./QnaView.jsp?num=<%=qnaDTO.getNum()%>"><%=qnaDTO.getTitle() %></a></td>
 						<td><%=qnaDTO.getWriter() %></td>
 						<td><%=qnaDTO.getReg_date() %></td>
 						<td><%=qnaDTO.getHit() %></td>
@@ -67,10 +109,20 @@
 			</table>
 			<div class="container">               
  				<ul class="pagination">	
- 				
+ 					<%if(curBlock>1){ %>
+ 						<li><a href="./QnaList.jsp?curPage=<%=startNum-1%>">[이전]</a></li>
+ 					<%} %>
+ 					<%for(int i=startNum; i<=lastNum; i++) {%>
+ 						<li><a href="./QnaList.jsp?curPage=<%=i%>"><%=i %></a></li>
+ 					<%} %>
+ 					<%if(curBlock < totalBlock) {%>
+ 						<li><a href="./QnaList.jsp?curPage=<%=lastNum+1%>">[다음]</a></li>
+ 					<%} %>
  				</ul>
  			</div>
-			<a class="btn btn-primary" href="./QnaWriteForm.jsp">WRITE</a>
+			<%if(memberDTO != null) {%>
+				<a class="btn btn-success" href="./QnaWriteForm.jsp">write</a>
+			<%} %>
 		</article>	
 	</section>
 	

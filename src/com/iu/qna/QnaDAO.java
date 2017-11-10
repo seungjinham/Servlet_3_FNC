@@ -10,21 +10,44 @@ import com.iu.util.DBConnector;
 public class QnaDAO {
 
 	//getTotalCount
-	public void getTotalCount() {
+	public int getTotalCount() throws Exception {
+		Connection con = DBConnector.getConnect();
 		
+		String sql="select nvl(count(num),0) from qna";
+		PreparedStatement st = con.prepareStatement(sql);
+		ResultSet rs = st.executeQuery();
+		rs.next();
+		
+		int totalCount = rs.getInt(1);
+		DBConnector.disConnect(rs, st, con);
+		return totalCount;
 	}
 	
 	//HitUpdate
-	public void HitUpdate() {
+	public int hitUpdate(int num) throws Exception {
+		Connection con = DBConnector.getConnect();
 		
+		String sql="update qna set hit=hit+1 where num=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1, num);
+		
+		int result = st.executeUpdate();
+		DBConnector.disConnect(st, con);
+		
+		return result;
 	}
 	
 	//selectList
-	public ArrayList<QnaDTO> selectList() throws Exception {
+	public ArrayList<QnaDTO> selectList(int startRow, int lastRow) throws Exception {
 		Connection con = DBConnector.getConnect();
 		
-		String sql="select * from qna";
+		String sql="select * from "
+				+ "(select rownum R, N.* from "
+				+ "(select * from qna order by num desc) N) "
+				+ "where R between ? and ?";
 		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1, startRow);
+		st.setInt(2, lastRow);
 		ResultSet rs = st.executeQuery();
 		
 		ArrayList<QnaDTO> list = new ArrayList<>();
@@ -35,7 +58,7 @@ public class QnaDAO {
 			qnaDTO.setContents(rs.getString("contents"));
 			qnaDTO.setWriter(rs.getString("writer"));
 			qnaDTO.setHit(rs.getInt("hit"));
-			qnaDTO.setReg_date(rs.getDate("date"));
+			qnaDTO.setReg_date(rs.getDate("reg_date"));
 			
 			list.add(qnaDTO);
 		}
@@ -45,12 +68,12 @@ public class QnaDAO {
 	}
 	
 	//selectOne
-	public QnaDTO selectOne(String id) throws Exception {
+	public QnaDTO selectOne(int num) throws Exception {
 		Connection con = DBConnector.getConnect();
 		
-		String sql="select * from qna where id=?";
+		String sql="select * from qna where num=?";
 		PreparedStatement st = con.prepareStatement(sql);
-		st.setString(1, id);
+		st.setInt(1, num);
 		ResultSet rs = st.executeQuery();
 		
 		QnaDTO qnaDTO=null;
@@ -61,8 +84,8 @@ public class QnaDAO {
 			qnaDTO.setTitle(rs.getString("title"));
 			qnaDTO.setContents(rs.getString("contents"));
 			qnaDTO.setWriter(rs.getString("writer"));
-			qnaDTO.setReg_date(rs.getDate("reg_date"));
 			qnaDTO.setHit(rs.getInt("hit"));
+			qnaDTO.setReg_date(rs.getDate("reg_date"));
 		}
 		DBConnector.disConnect(rs, st, con);
 		return qnaDTO;
@@ -72,11 +95,11 @@ public class QnaDAO {
 	public int insert(QnaDTO qnaDTO) throws Exception {
 		Connection con = DBConnector.getConnect();
 		
-		String sql="insert into qna values(qna_seq.value,?,?,sysdate,?)";
+		String sql="insert into qna values(qna_seq.nextval,?,?,?,0,sysdate)";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setString(1, qnaDTO.getTitle());
-		st.setString(2, qnaDTO.getWriter());
-		st.setInt(3, qnaDTO.getHit());
+		st.setString(2, qnaDTO.getContents());
+		st.setString(3, qnaDTO.getWriter());
 		
 		int result=st.executeUpdate();
 		DBConnector.disConnect(st, con);		
