@@ -67,7 +67,10 @@
 			if( memberDTO != null && qnaDTO.getWriter().equals(memberDTO.getId()) ){ %>
 				<a class="btn btn-info" href="./QnaDelete.jsp?num=<%=qnaDTO.getNum()%>">Delete</a>
 				<a class="btn btn-info" href="./QnaUpdateForm.jsp?num=<%=qnaDTO.getNum()%>">Update</a>
-		<%	}
+			<%}
+			else if(memberDTO != null) {%>
+				<a class="btn btn-warning" href="./replyWriteForm.jsp?num=<%=qnaDTO.getNum()%>">Reply</a>
+			<%}
 		} catch(Exception e) {
 			e.printStackTrace();
 		} %>

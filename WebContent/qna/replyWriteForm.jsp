@@ -1,20 +1,21 @@
-<%@page import="com.iu.qna.QnaDTO"%>
-<%@page import="com.iu.qna.QnaDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	response.setCharacterEncoding("UTF-8");
 
-	int num=Integer.parseInt(request.getParameter("num"));
-	QnaDAO qnaDAO=new QnaDAO();
-	QnaDTO qnaDTO=qnaDAO.selectOne(num);
+	//부모의 num, ref, step
+	int num = Integer.parseInt(request.getParameter("num"));
+	int ref = Integer.parseInt(request.getParameter("ref"));
+	int step= Integer.parseInt(request.getParameter("step"));
+	int dept= Integer.parseInt(request.getParameter("dept"));
+	
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>QnaUpdateForm</title>
+<title>Reply Write Form</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -33,39 +34,36 @@
 </style>
 </head>
 <body>
-<%@ include file= "../temp/header.jsp" %>
+<%@ include file="../temp/header.jsp" %>
 	<section id="main">
-		<h1>QnA Update Form</h1>
-		<form class="form-horizontal" action="QnaUpdateProcess.jsp" method="post">
-			<input type="hidden" value=<%=qnaDTO.getNum()%> name="num">
-			<input type="hidden" value=<%=qnaDTO.getReg_date()%> name="reg_date">
-			<input type="hidden" value=<%=qnaDTO.getHit()%> name="hit">
+	<h1>Reply Write Form</h1>
+		<form class="form-horizontal" action="./replyWriteProcess.jsp" method="post">
+			<input type="hidden" value="<%=num %>" name = "num"> 
  			<div class="form-group">
  				<label class="control-label col-sm-2" for="writer">WRITER:</label>
  				<div class="col-sm-10">
- 					<input type="text" class="form-control" id="writer" name="writer" value="<%=qnaDTO.getWriter()%>" readonly="readonly">
+ 					<input type="text" class="form-control" id="writer" value="<%=memberDTO.getId() %>" name="writer">
  				</div>
  			</div>
  			<div class="form-group">
  				<label class="control-label col-sm-2" for="title">TITLE:</label>
  				<div class="col-sm-10"> 
- 					<input type="text" class="form-control" id="title" name="title" value="<%=qnaDTO.getTitle()%>">
+ 					<input type="text" class="form-control" id="title" placeholder="Enter title" name="title">
  				</div>
  			</div>
  			<div class="form-group">
  				<label class="control-label col-sm-2" for="contents">CONTENTS:</label>
  				<div class="col-sm-10"> 
- 					<textarea class="form-control" rows="5" id="contents" name="contents"><%=qnaDTO.getContents()%></textarea>
+ 					<textarea class="form-control" rows="5" id="contents" placeholder="Enter contents" name="contents"></textarea>
  				</div>
  			</div> 			
  			<div class="form-group"> 
  				<div class="col-sm-offset-2 col-sm-10">
- 					<button type="submit" class="btn btn-default">Submit</button>
+ 					<button type="submit" class="btn btn-success">Submit</button>
  				</div>
  			</div>
  		</form>
 	</section>
-
-	<%@ include file= "../temp/footer.jsp" %>
+	<%@ include file="../temp/footer.jsp" %>
 </body>
 </html>
