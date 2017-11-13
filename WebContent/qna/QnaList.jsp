@@ -100,17 +100,21 @@
 				<% for(QnaDTO qnaDTO: list){ %>
 				<tr>
 					<td><%=qnaDTO.getNum()%></td>
+					
 					<%try{%>
-					<%if(memberDTO != null){ %>
-					<td><a href="QnaView.jsp?num=<%=qnaDTO.getNum()%>"><%=qnaDTO.getTitle()%></a></td>
-					<%}else{ %>
-					<td>
-					<%for(int i=0;i<qnaDTO.getDept();i++){ %>
-						--
-					<%} %>
-					<%=qnaDTO.getTitle()%></td>
-					<%} %>
-					<%}catch(Exception e){} %>
+						<%if(memberDTO != null){ %>
+							<td><a href="QnaView.jsp?num=<%=qnaDTO.getNum()%>"><%=qnaDTO.getTitle()%></a></td>
+						<%}else{ %>
+							<td>
+							<%for(int i=0;i<qnaDTO.getDept();i++){ %>
+								--
+							<%} %>
+							<%=qnaDTO.getTitle()%></td>
+						<%} %>
+					<%}catch(Exception e){
+						e.printStackTrace();
+					} %>
+					
 					<td><%=qnaDTO.getWriter()%></td>
 					<td><%=qnaDTO.getReg_date()%></td>
 					<td><%=qnaDTO.getHit()%></td>

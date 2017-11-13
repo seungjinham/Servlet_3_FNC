@@ -73,6 +73,7 @@
 			e.printStackTrace();
 		} %>
 		<a class="btn btn-info" href="./NoticeList.jsp">List</a>
+		<a href="../images/main/main.jpg">Main</a>
 	</article>
 	</section>
 	<%@ include file="../temp/footer.jsp"%>

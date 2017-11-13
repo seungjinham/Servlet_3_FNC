@@ -10,10 +10,10 @@
 	noticeDTO.setWriter(request.getParameter("writer"));
 	noticeDTO.setTitle(request.getParameter("title"));
 	noticeDTO.setContents(request.getParameter("contents"));
-	
+	String name=request.getParameter("f1");
+	System.out.println(name);
 	NoticeDAO noticeDAO=new NoticeDAO();
 	int result=noticeDAO.insert(noticeDTO);
-	
 	String s="Write Fail";
 	if(result>0) {
 		s="Write Success";

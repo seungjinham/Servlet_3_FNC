@@ -103,8 +103,8 @@ public class NoticeDAO {
 		String sql="insert into notice values(board_seq.nextval,?,?,?,sysdate,0)";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setString(1, noticeDTO.getTitle());
-		st.setString(2, noticeDTO.getContents());
-		st.setString(3, noticeDTO.getWriter());
+		st.setString(2, noticeDTO.getWriter());
+		st.setString(3, noticeDTO.getContents());
 		
 		int result=st.executeUpdate();
 		DBConnector.disConnect(st, con);
