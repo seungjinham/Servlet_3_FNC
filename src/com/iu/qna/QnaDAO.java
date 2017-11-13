@@ -8,18 +8,35 @@ import java.util.ArrayList;
 import com.iu.util.DBConnector;
 
 public class QnaDAO {
+	
+	//getNum
+	public int getNum() throws Exception {
+		Connection con = DBConnector.getConnect();
+		
+		String sql = "select max(num) from qna";
+		PreparedStatement st = con.prepareStatement(sql);
+		ResultSet rs = st.executeQuery();
+		rs.next();
+		
+		int result = rs.getInt(1);
+		DBConnector.disConnect(rs, st, con);
+		
+		return result;
+	}
+	
 	//replyInsert
 	public int replyInsert(QnaDTO qnaDTO, QnaDTO parent) throws Exception{
 		Connection con = DBConnector.getConnect();
 		
-		String sql="insert into qna values(qna_seq.nextval,?,?,?,0,sysdate,?,?,?)";
+		String sql="insert into qna values(?,?,?,?,0,sysdate,?,?,?)";
 		PreparedStatement st = con.prepareStatement(sql);
-		st.setString(1, qnaDTO.getTitle());
-		st.setString(2, qnaDTO.getContents());
-		st.setString(3, qnaDTO.getWriter());
-		st.setInt(4, parent.getRef());
-		st.setInt(5, parent.getStep()+1);
-		st.setInt(6, parent.getDept()+1);
+		st.setInt(1, qnaDTO.getNum());
+		st.setString(2, qnaDTO.getTitle());
+		st.setString(3, qnaDTO.getContents());
+		st.setString(4, qnaDTO.getWriter());
+		st.setInt(5, parent.getRef());
+		st.setInt(6, parent.getStep()+1);
+		st.setInt(7, parent.getDept()+1);
 		
 		int result=st.executeUpdate();
 		DBConnector.disConnect(st, con);		
@@ -133,11 +150,12 @@ public class QnaDAO {
 	public int insert(QnaDTO qnaDTO) throws Exception {
 		Connection con = DBConnector.getConnect();
 		
-		String sql="insert into qna values(qna_seq.nextval,?,?,?,0,sysdate,qna_seq.currval, 0, 0)";
+		String sql="insert into qna values(?,?,?,?,0,sysdate,qna_seq.currval, 0, 0)";
 		PreparedStatement st = con.prepareStatement(sql);
-		st.setString(1, qnaDTO.getTitle());
-		st.setString(2, qnaDTO.getContents());
-		st.setString(3, qnaDTO.getWriter());
+		st.setInt(1, qnaDTO.getNum());
+		st.setString(2, qnaDTO.getTitle());
+		st.setString(3, qnaDTO.getContents());
+		st.setString(4, qnaDTO.getWriter());
 		
 		int result=st.executeUpdate();
 		DBConnector.disConnect(st, con);		

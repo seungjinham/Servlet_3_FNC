@@ -8,6 +8,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.7.3/full/ckeditor.js"></script>
+<script type="text/javascript">
+	window.onload=function(){
+		CKEDITOR.replace('contents');
+	}
+</script>
 
 <link href="../css/header.css" rel="stylesheet">
 <style type="text/css">
@@ -27,11 +33,11 @@
 	<%@ include file="../temp/header.jsp" %>
 	<section id="main">
 	<h1>QnA Write Form</h1>
-		<form class="form-horizontal" action="QnaWriteProcess.jsp" method="post">
+		<form class="form-horizontal" action="QnaWriteProcess.jsp" method="post" enctype="multipart/form-data">
  			<div class="form-group">
  				<label class="control-label col-sm-2" for="writer">WRITER:</label>
  				<div class="col-sm-10">
- 					<input type="text" class="form-control" id="writer" value="<%=memberDTO.getId() %>" name="writer">
+ 					<input type="text" class="form-control" id="writer" value="<%=memberDTO.getId() %>" name="writer" readonly="readonly">
  				</div>
  			</div>
  			<div class="form-group">
@@ -45,7 +51,14 @@
  				<div class="col-sm-10"> 
  					<textarea class="form-control" rows="5" id="contents" placeholder="Enter contents" name="contents"></textarea>
  				</div>
+ 			</div> 		
+ 			<div class="form-group">
+ 				<label class="control-label col-sm-2" for="f1">FILE:</label>
+ 				<div class="col-sm-10"> 
+ 					<input type="file" class="form-control" name="f1">
+ 				</div>
  			</div> 			
+ 				
  			<div class="form-group"> 
  				<div class="col-sm-offset-2 col-sm-10">
  					<button type="submit" class="btn btn-success">Submit</button>

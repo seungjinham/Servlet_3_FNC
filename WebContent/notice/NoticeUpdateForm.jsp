@@ -43,7 +43,7 @@
 	<%@ include file= "../temp/header.jsp" %>
 	<section id="main">
 		<h1>Update Form</h1>
-		<form class="form-horizontal" action="NoticeUpdateProcess.jsp" method="post">
+		<form class="form-horizontal" action="NoticeUpdateProcess.jsp" method="post" enctype="multipart/form-data">
 			<input type="hidden" value=<%=noticeDTO.getNum()%> name="num">
 			<input type="hidden" value=<%=noticeDTO.getReg_date()%> name="reg_date">
 			<input type="hidden" value=<%=noticeDTO.getHit()%> name="hit">
@@ -64,7 +64,15 @@
  				<div class="col-sm-10"> 
  					<textarea class="form-control" rows="5" id="contents" name="contents"><%=noticeDTO.getContents()%></textarea>
  				</div>
- 			</div> 			
+ 			</div> 		
+ 			
+ 			<div class="form-group">
+ 				<label class="control-label col-sm-2" for="f1">FILE:</label>
+ 				<div class="col-sm-10"> 
+ 					<input type="file" class="form-control" name="f1">
+ 				</div>
+ 			</div> 
+ 				
  			<div class="form-group"> 
  				<div class="col-sm-offset-2 col-sm-10">
  					<button type="submit" class="btn btn-default">Submit</button>

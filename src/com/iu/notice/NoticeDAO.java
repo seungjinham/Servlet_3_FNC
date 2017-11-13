@@ -5,12 +5,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import org.eclipse.jdt.internal.compiler.batch.Main;
-
 import com.iu.util.DBConnector;
 
 public class NoticeDAO {
+	//getNum
+	public int getNum() throws Exception {
+		Connection con = DBConnector.getConnect();
+		String sql="select board_seq.nextval from dual";
+		PreparedStatement st = con.prepareStatement(sql);
+		ResultSet rs = st.executeQuery();
+		rs.next();
+		int result = rs.getInt(1);
+		DBConnector.disConnect(rs, st, con);
+		return result;
+	}
 	
+	//getTotalCount
 	public int getTotalCount(String kind, String search) throws Exception {
 		Connection con = DBConnector.getConnect();
 		
@@ -28,6 +38,7 @@ public class NoticeDAO {
 		
 	}
 	
+	//hitUpdate
 	public int hitUpdate(int num) throws Exception {
 		Connection con = DBConnector.getConnect();
 		
@@ -41,6 +52,7 @@ public class NoticeDAO {
 		return result;
 	}
 	
+	//selectList
 	public ArrayList<NoticeDTO> selectList(int startRow, int lastRow, String kind, String search) throws Exception{
 		Connection con = DBConnector.getConnect();
 		
@@ -100,11 +112,12 @@ public class NoticeDAO {
 	public int insert(NoticeDTO noticeDTO) throws Exception{
 		Connection con = DBConnector.getConnect();
 		
-		String sql="insert into notice values(board_seq.nextval,?,?,?,sysdate,0)";
+		String sql="insert into notice values(?,?,?,?,sysdate,0)"; //num, title, writer, contents
 		PreparedStatement st = con.prepareStatement(sql);
-		st.setString(1, noticeDTO.getTitle());
-		st.setString(2, noticeDTO.getContents());
+		st.setInt(1, noticeDTO.getNum());
+		st.setString(2, noticeDTO.getTitle());
 		st.setString(3, noticeDTO.getWriter());
+		st.setString(4, noticeDTO.getContents());
 		
 		int result=st.executeUpdate();
 		DBConnector.disConnect(st, con);

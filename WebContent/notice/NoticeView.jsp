@@ -1,3 +1,6 @@
+<%@page import="com.iu.files.FileDTO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.iu.files.FileDAO"%>
 <%@page import="com.iu.notice.NoticeDTO"%>
 <%@page import="com.iu.notice.NoticeDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -10,7 +13,9 @@
 	NoticeDAO noticeDAO=new NoticeDAO();
 	
 	int result=noticeDAO.hitUpdate(num);
-	NoticeDTO noticeDTO=noticeDAO.selectOne(num);	
+	NoticeDTO noticeDTO=noticeDAO.selectOne(num);
+	FileDAO fileDAO = new FileDAO();
+	ArrayList<FileDTO> list = fileDAO.selectList(num);	
 %>
 <!DOCTYPE html>
 <html>
@@ -63,17 +68,27 @@
 				</tr>
 			</tbody>
 		</table>
-		<%
-		try{
-			if( memberDTO != null && noticeDTO.getWriter().equals(memberDTO.getId()) ){ %>
+		
+		<div>
+			<%for(int i=0; i<list.size(); i++)  {%>
+				<p>
+					<a href="../upload/<%=list.get(i).getfName() %>"><%=list.get(i).getoName() %></a>
+				</p>
+			<%} %>
+		</div>
+		
+		<a href="../upload/"></a>
+		
+		<%try{ %>
+			<%if(memberDTO != null && noticeDTO.getWriter().equals(memberDTO.getId())) {%>
 				<a class="btn btn-info" href="./NoticeDelete.jsp?num=<%=noticeDTO.getNum()%>">Delete</a>
 				<a class="btn btn-info" href="./NoticeUpdateForm.jsp?num=<%=noticeDTO.getNum()%>">Update</a>
-		<%	}
-		} catch(Exception e) {
-			e.printStackTrace();
+			<%} %>
+		<%}catch(Exception e) {
+			
 		} %>
+		
 		<a class="btn btn-info" href="./NoticeList.jsp">List</a>
-		<a href="../images/main/main.jpg">Main</a>
 	</article>
 	</section>
 	<%@ include file="../temp/footer.jsp"%>

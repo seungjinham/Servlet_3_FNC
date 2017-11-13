@@ -1,3 +1,6 @@
+<%@page import="com.iu.files.FileDTO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.iu.files.FileDAO"%>
 <%@page import="com.iu.qna.QnaDTO"%>
 <%@page import="com.iu.qna.QnaDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -10,7 +13,9 @@
 	QnaDAO qnaDAO=new QnaDAO();
 
 	int result=qnaDAO.hitUpdate(num);
-	QnaDTO qnaDTO=qnaDAO.selectOne(num);	
+	QnaDTO qnaDTO=qnaDAO.selectOne(num);
+	FileDAO fileDAO = new FileDAO();
+	ArrayList<FileDTO> list = fileDAO.selectList(num);
 %>
 <!DOCTYPE html>
 <html>
@@ -62,6 +67,17 @@
 				</tr>
 			</tbody>
 		</table>
+		
+				<div>
+			<%for(int i=0; i<list.size(); i++)  {%>
+				<p>
+					<a href="../upload/<%=list.get(i).getfName() %>"><%=list.get(i).getoName() %></a>
+				</p>
+			<%} %>
+		</div>
+		
+		<a href="../upload/"></a>		
+		
 		<%
 		try{
 			if( memberDTO != null && qnaDTO.getWriter().equals(memberDTO.getId()) ){ %>

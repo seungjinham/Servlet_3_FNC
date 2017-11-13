@@ -52,9 +52,8 @@
  					<textarea class="form-control" rows="5" id="contents" placeholder="Enter contents" name="contents"></textarea>
  				</div>
  			</div> 		
- 			
  			<div class="form-group">
- 				<label class="control-label col-sm-2" for="contents">CONTENTS:</label>
+ 				<label class="control-label col-sm-2" for="f1">FILE:</label>
  				<div class="col-sm-10"> 
  					<input type="file" class="form-control" name="f1">
  				</div>
