@@ -33,7 +33,7 @@
 	<%@ include file= "../temp/header.jsp" %>
 	<section id="main">
 	<h1>Write Form</h1>
-		<form class="form-horizontal" action="NoticeWriterProcess.jsp" method="post" enctype=" multipart/form-data">
+		<form class="form-horizontal" action="NoticeWriterProcess.jsp" method="post" enctype="multipart/form-data">
  			<div class="form-group">
  				<label class="control-label col-sm-2" for="writer">WRITER:</label>
  				<div class="col-sm-10">
@@ -56,7 +56,7 @@
  			<div class="form-group">
  				<label class="control-label col-sm-2" for="contents">CONTENTS:</label>
  				<div class="col-sm-10"> 
- 					<input type="file" name="f1">
+ 					<input type="file" class="form-control" name="f1">
  				</div>
  			</div> 
  				

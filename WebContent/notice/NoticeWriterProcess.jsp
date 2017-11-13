@@ -1,3 +1,5 @@
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@page import="java.io.File"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="com.iu.notice.NoticeDAO"%>
 <%@page import="com.iu.notice.NoticeDTO"%>
@@ -9,12 +11,19 @@
 	
 	int maxSize=1024*1024*10;//파일크기
 	String save=session.getServletContext().getRealPath("upload");
-	MultipartRequest multi = new MultipartRequest(request, "", maxSize, "UTF-8", null);
+	File f = new File(save);
+	if(!f.exists()) {
+		f.mkdirs();
+	}
 	
-	NoticeDTO noticeDTO=new NoticeDTO();
-	noticeDTO.setWriter(request.getParameter("writer"));
-	noticeDTO.setTitle(request.getParameter("title"));
-	noticeDTO.setContents(request.getParameter("contents"));
+	MultipartRequest multi = new MultipartRequest(request, save, maxSize, "UTF-8", new DefaultFileRenamePolicy());
+	
+	//파일 업로드시에는 multi에서 꺼내야함
+	NoticeDTO noticeDTO = new NoticeDTO();
+	noticeDTO.setWriter(multi.getParameter("writer"));
+	noticeDTO.setTitle(multi.getParameter("contents"));
+	noticeDTO.setContents(multi.getParameter("contents"));
+	
 	String name=request.getParameter("f1");
 	System.out.println(name);
 	NoticeDAO noticeDAO=new NoticeDAO();

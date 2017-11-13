@@ -8,6 +8,37 @@ import java.util.ArrayList;
 import com.iu.util.DBConnector;
 
 public class QnaDAO {
+	//replyInsert
+	public int replyInsert(QnaDTO qnaDTO, QnaDTO parent) throws Exception{
+		Connection con = DBConnector.getConnect();
+		
+		String sql="insert into qna values(qna_seq.nextval,?,?,?,0,sysdate,?,?,?)";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1, qnaDTO.getTitle());
+		st.setString(2, qnaDTO.getContents());
+		st.setString(3, qnaDTO.getWriter());
+		st.setInt(4, parent.getRef());
+		st.setInt(5, parent.getStep()+1);
+		st.setInt(6, parent.getDept()+1);
+		
+		int result=st.executeUpdate();
+		DBConnector.disConnect(st, con);		
+		return result;	
+	}
+	
+	//replyUpdate
+	public int replyUpdate(QnaDTO qnaDTO) throws Exception {
+		Connection con = DBConnector.getConnect();
+		
+		String sql="update qna set step=step+1 where ref=? and step>?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1, qnaDTO.getRef());
+		st.setInt(2, qnaDTO.getStep());
+		
+		int result = st.executeUpdate();
+		DBConnector.disConnect(st, con);
+		return result;		
+	}
 
 	//getTotalCount
 	public int getTotalCount() throws Exception {
@@ -43,8 +74,9 @@ public class QnaDAO {
 		
 		String sql="select * from "
 				+ "(select rownum R, N.* from "
-				+ "(select * from qna order by num desc) N) "
-				+ "where R between ? and ?";
+				+ "(select * from qna order by num desc, ref desc, step asc) N) "
+				+ "where R between ? and ? "
+				+ "order by ref desc, step asc";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setInt(1, startRow);
 		st.setInt(2, lastRow);
@@ -59,6 +91,9 @@ public class QnaDAO {
 			qnaDTO.setWriter(rs.getString("writer"));
 			qnaDTO.setHit(rs.getInt("hit"));
 			qnaDTO.setReg_date(rs.getDate("reg_date"));
+			qnaDTO.setRef(rs.getInt("ref"));
+			qnaDTO.setStep(rs.getInt("step"));
+			qnaDTO.setDept(rs.getInt("dept"));
 			
 			list.add(qnaDTO);
 		}
@@ -86,6 +121,9 @@ public class QnaDAO {
 			qnaDTO.setWriter(rs.getString("writer"));
 			qnaDTO.setHit(rs.getInt("hit"));
 			qnaDTO.setReg_date(rs.getDate("reg_date"));
+			qnaDTO.setRef(rs.getInt("ref"));
+			qnaDTO.setStep(rs.getInt("step"));
+			qnaDTO.setDept(rs.getInt("dept"));
 		}
 		DBConnector.disConnect(rs, st, con);
 		return qnaDTO;
@@ -95,7 +133,7 @@ public class QnaDAO {
 	public int insert(QnaDTO qnaDTO) throws Exception {
 		Connection con = DBConnector.getConnect();
 		
-		String sql="insert into qna values(qna_seq.nextval,?,?,?,0,sysdate)";
+		String sql="insert into qna values(qna_seq.nextval,?,?,?,0,sysdate,qna_seq.currval, 0, 0)";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setString(1, qnaDTO.getTitle());
 		st.setString(2, qnaDTO.getContents());
