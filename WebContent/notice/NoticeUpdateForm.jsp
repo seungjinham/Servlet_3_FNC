@@ -19,6 +19,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.7.3/full/ckeditor.js"></script>
+<script type="text/javascript">
+	window.onload=function(){
+		CKEDITOR.replace('contents');
+	}
+</script>
 <link href="../css/header.css" rel="stylesheet">
 <style type="text/css">
 	h1{

@@ -3,40 +3,38 @@
 <%@page import="com.iu.notice.NoticeDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%
+<%
 	request.setCharacterEncoding("UTF-8");
 	response.setCharacterEncoding("UTF-8");
-	
 	int maxSize=1024*1024*10;//파일크기
 	String save=session.getServletContext().getRealPath("upload");
-	MultipartRequest multi = new MultipartRequest(request, "", maxSize, "UTF-8", null);
+	System.out.println(save);
+	//MultipartRequest multi = new MultipartRequest(request, "", maxSize, "UTF-8", null);
 	
-	NoticeDTO noticeDTO=new NoticeDTO();
+	NoticeDTO noticeDTO = new NoticeDTO();
 	noticeDTO.setWriter(request.getParameter("writer"));
 	noticeDTO.setTitle(request.getParameter("title"));
 	noticeDTO.setContents(request.getParameter("contents"));
-	String name=request.getParameter("f1");
+	String name =request.getParameter("f1");
 	System.out.println(name);
-	NoticeDAO noticeDAO=new NoticeDAO();
+	NoticeDAO noticeDAO = new NoticeDAO();
 	//int result=noticeDAO.insert(noticeDTO);
 	int result=0;
-	String s="Write Fail";
-	if(result>0) {
-		s="Write Success";
+	String s ="Fail";
+	if(result>0){
+		s = "Success";
 	}
+	
 	request.setAttribute("message", s);
-	request.setAttribute("path","../index.jsp");
-	
-	//1. Foward
-	
+	request.setAttribute("path", "noticeList.jsp");
+	//1 Foward
 	RequestDispatcher view = request.getRequestDispatcher("../common/result.jsp");
 	view.forward(request, response);
-	
-	
 	//2. redirect
 	//response.sendRedirect("../common/result.jsp");
 	
-%>
+	
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,6 +42,5 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 </body>
 </html>

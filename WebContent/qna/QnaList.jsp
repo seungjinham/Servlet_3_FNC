@@ -14,7 +14,7 @@
 		e.printStackTrace();
 	}
 	
-	int perPage=5;
+	int perPage=10;
 	int startRow=(curPage-1)*perPage+1;
 	int lastRow=curPage*perPage;
 	
@@ -92,19 +92,33 @@
 			<table class="table table-hover">
 				<tr>
 					<th>NO</th>
-					<th>TITLE</th>
-					<th>WRITER</th>
-					<th>DATE</th>
-					<th>HIT</th>
+					<td>TITLE</td>
+					<td>WRITER</td>
+					<td>DATE</td>
+					<td>HIT</td>
 				</tr>
-				<%for(QnaDTO qnaDTO:list){ %>
-					<tr>
-						<td><%=qnaDTO.getNum() %></td>
-						<td><a href="./QnaView.jsp?num=<%=qnaDTO.getNum()%>"><%=qnaDTO.getTitle() %></a></td>
-						<td><%=qnaDTO.getWriter() %></td>
-						<td><%=qnaDTO.getReg_date() %></td>
-						<td><%=qnaDTO.getHit() %></td>
-					</tr>
+				<% for(QnaDTO qnaDTO: list){ %>
+				<tr>
+					<td><%=qnaDTO.getNum()%></td>
+					
+					<%try{%>
+						<%if(memberDTO != null){ %>
+							<td><a href="QnaView.jsp?num=<%=qnaDTO.getNum()%>"><%=qnaDTO.getTitle()%></a></td>
+						<%}else{ %>
+							<td>
+							<%for(int i=0;i<qnaDTO.getDept();i++){ %>
+								--
+							<%} %>
+							<%=qnaDTO.getTitle()%></td>
+						<%} %>
+					<%}catch(Exception e){
+						e.printStackTrace();
+					} %>
+					
+					<td><%=qnaDTO.getWriter()%></td>
+					<td><%=qnaDTO.getReg_date()%></td>
+					<td><%=qnaDTO.getHit()%></td>
+				</tr>
 				<%} %>
 			</table>
 			<div class="container">               
@@ -121,7 +135,7 @@
  				</ul>
  			</div>
 			<%if(memberDTO != null) {%>
-				<a class="btn btn-success" href="./QnaWriteForm.jsp">write</a>
+				<a class="btn btn-primary" href="./QnaWriteForm.jsp">write</a>
 			<%} %>
 		</article>	
 	</section>
